@@ -8,7 +8,7 @@
 - Visa alla projekt och specifika posts.
 ## 2. Vyer (visa bildskisser på dina sidor).
 ![Home](bloggMainsite.png)
-![Home Logged In](bloggMinsiteLogged.png)
+![Home Logged In](bloggMainsiteLogged.png)
 ![Log in](bloggLogIn.png)
 ![Sign Up](bloggSignup.png)
 ![Create project](bloggProjekt.png)
