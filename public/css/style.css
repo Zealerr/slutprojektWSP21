@@ -1,0 +1,74 @@
+/* general reset*/
+
+body, body * {
+    margin: unset;
+    box-sizing: unset;
+    padding: 0;
+    font-size: unset;
+    color: white;
+    text-decoration: unset;
+}
+
+body {
+    background-color: var(--backgroundColor);
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* css variables*/
+
+:root {
+    --headercolor: #000000;
+    --logoColor: #2525e5;
+    --burgerButtonColor: #2525e5;
+    --blogpostColor: #202020;
+    --sideMenuItemColor: #202020;
+    --backgroundColor: #181818;
+    
+    /*article colors*/
+    --figcaptioncolor: rgb(196, 133, 40);
+    --h1color: rgb(146, 146, 146);
+    --h2color: hsl(000, 0%, 40%);
+    --h3color: #7a7a7a;
+    --paragrafcolor: rgb(148, 148, 148);
+    --textlinkcolor: rgb(150, 65, 150);
+    --textlinkhovercolor: rgb(156, 1, 156);
+}
+
+
+/* whole page grid - general template*/
+
+.pagewrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 9vh auto 7vh;
+    grid-template-areas: "header" "content" "footer";
+}
+
+header {
+    grid-row: header;
+    display: grid;
+    grid-template-columns: 30vw 70vw;
+    grid-template-areas: "logo nav";
+}
+
+/* Content placement*/
+
+.content {
+    grid-row: content;
+}
+
+.logo{
+    grid-column: logo;
+}
+.logo a img{
+    height: 6   0px;
+}
+
+nav {
+    grid-column: nav;
+}
+a {
+    color: var(--textlinkcolor);
+}

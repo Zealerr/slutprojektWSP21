@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+html lang="en"
+  head
+    meta charset="UTF-8"/
+    meta name="viewport" content="width=device-width, initial-scale=1.0"/
+
+    title Blue Serpent
+    link rel="stylesheet" href="css/style.css" type="text/css"/
+  body
+    div class="pagewrapper"
+      header
+        div class="logo"
+          a href="/" 
+            img src="img/logo_blue_black_v2.png"
+        nav
+          ul class="menu"
+            li
+              a href="/projects" class="menulink" Projects
+            li
+              a href="/about" class="menulink" About
+          
+          -if session[:username] == nil
+            li
+              a href="/login" class="menubtn logbtn" Log in
+            li
+              a href="/signup" class="menubtn signbtn" Sign up
+          -if session[:username] != nil
+            li
+              div
+              ul class="createMenu"
+                li
+                  a href="/newProject" New project 
+                li
+                  a href="/newPost" New post
+      div class="content"
+        == yield
