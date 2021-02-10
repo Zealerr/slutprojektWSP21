@@ -1,0 +1,19 @@
+form action='posts/create' method='post'
+  label for="project" For which project?
+  select name="project" 
+    -projectTitles.each do |title|
+      option value="#{title}" #{title}
+  input class='h1' type='text' name='postTitle' placeholder='Post 1337'
+  -if Time.now.month < 10
+    -month = "0" + "#{Time.now.month}"
+  -date = "#{Time.now.year}-" + "#{month}-" + "#{Time.now.day}"
+  input class='date' type='text' name='date' value="#{date}"
+  input class='text' type='text' placeholder='Write Stuff here...'
+
+.postMenu
+  ul
+    li
+      button type='button' text
+      button type='button' onclick='openHeadingMenu()' heading
+      button type='button' quote
+      button type='button' image

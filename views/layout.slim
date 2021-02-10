@@ -5,13 +5,14 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1.0"/
 
     title Blue Serpent
-    link rel="stylesheet" href="css/style.css" type="text/css"/
+    /link rel="stylesheet" href="/css/style.css" type="text/css"/
+    link rel="stylesheet" href="/css/primitive.css"/
   body
     div class="pagewrapper"
       header
         div class="logo"
           a href="/" 
-            img src="img/logo_blue_black_v2.png"
+            /img src="/img/logo_blue_black_v2.png"
         nav
           ul class="menu"
             li
@@ -33,4 +34,8 @@ html lang="en"
                 li
                   a href="/newPost" New post
       div class="content"
+
         == yield
+      div class="footer"
+        p <span>BLUE SERPENT</span> By Felix Rosenberg
+    script src="/js/functionality.js"    
