@@ -4,7 +4,9 @@ require 'sqlite3'
 require 'bcrypt'
 enable :sessions
 
+module DB
 
+end
 def testUser()
     #temp user logged in
     user = {

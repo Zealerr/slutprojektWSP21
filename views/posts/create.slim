@@ -1,4 +1,4 @@
-form action='posts/create' method='post'
+form class="post-form" action='posts/create' method='post'
   label for="project" For which project?
   select name="project" 
     -projectTitles.each do |title|
@@ -14,6 +14,9 @@ form action='posts/create' method='post'
   ul
     li
       button type='button' text
+    li
       button type='button' onclick='openHeadingMenu()' heading
+    li
       button type='button' quote
+    li
       button type='button' image
