@@ -1,3 +1,22 @@
+.post-menu
+  ul
+    li
+      button type='button' onclick="Post.addField('text')" = "text" 
+    li
+      button type='button' heading
+      div class="headingsMenu"
+        ul
+          li
+            button type='button' onclick="Post.addField('h2')" header 2
+          li
+            button type='button' onclick="Post.addField('h3')" header 3
+          li
+            button type='button' onclick="Post.addField('h4')" header 4
+    li
+      button type='button' onclick="Post.addField('quote')" quote
+    li
+      button type='button' onclick="Post.addField('img')" image
+
 form class="post-form" action='posts/create' method='post'
   label for="project" For which project?
   select name="project" 
@@ -8,15 +27,7 @@ form class="post-form" action='posts/create' method='post'
     -month = "0" + "#{Time.now.month}"
   -date = "#{Time.now.year}-" + "#{month}-" + "#{Time.now.day}"
   input class='date' type='text' name='date' value="#{date}"
-  input class='text' type='text' placeholder='Write Stuff here...'
+  input class='text' type='text' placeholder='Write your text here...'
 
-.postMenu
-  ul
-    li
-      button type='button' text
-    li
-      button type='button' onclick='openHeadingMenu()' heading
-    li
-      button type='button' quote
-    li
-      button type='button' image
+  // == räknas som kod medans = räknas som string värde
+  

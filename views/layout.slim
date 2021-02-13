@@ -5,36 +5,65 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1.0"/
 
     title Blue Serpent
-    /link rel="stylesheet" href="/css/style.css" type="text/css"/
-    link rel="stylesheet" href="/css/primitive.css"/
+    link rel="stylesheet" href="/css/style.css" type="text/css"/
+    / link rel="stylesheet" href="/css/primitive.css"/
   body
     div class="pagewrapper"
+      div.header
       header
         div class="logo"
           a href="/" 
-            /img src="/img/logo_blue_black_v2.png"
+            img src="/img/long_white_transparent_logo.png"
         nav
-          ul class="menu"
-            li
-              a href="/projects" class="menulink" Projects
-            li
-              a href="/about" class="menulink" About
-          
-          -if session[:username] == nil
-            li
-              a href="/login" class="menubtn logbtn" Log in
-            li
-              a href="/signup" class="menubtn signbtn" Sign up
-          -if session[:username] != nil
-            li
-              div
-              ul class="createMenu"
+            ul class="menu"
+              li
+                a href="/projects" class="menulink" Projects
+              li
+                a href="/about" class="menulink" About
+            -if session[:user] == nil
+              ul class="guest-menu"
                 li
-                  a href="/newProject" New project 
+                  a href="/login" class="menubtn logbtn" Log in
                 li
-                  a href="/newPost" New post
+                  a href="/signup" class="menubtn signbtn" Sign up
+            -if session[:user] != nil
+              ul class="user-menu"
+                li
+                  button type='button'
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  div class="hidden-nav-menu"
+                    div class="heading"
+                      h3 
+                        | Create
+                    div class="hidden-nav-content"
+                      ul
+                        li
+                          a href="#" New post
+                        li
+                          a href="#" New project
+                li
+                  button type='button'
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                  div class="hidden-nav-menu"
+                    div class="heading"
+                        h3 
+                          | #{session[:user][:username]}
+                    div class="hidden-nav-content"
+                      ul
+                        li
+                          a href="#" Account
+                        li
+                          a href="#" Log out
       div class="content"
-        == yield
+        main
+          -if session[:user] != nil
+          == yield
       div class="footer"
+      footer
         p <span>BLUE SERPENT</span> By Felix Rosenberg
-    script src="/js/postCreation.js"    
+    script src="/js/postCreation.js"
