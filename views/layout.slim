@@ -40,9 +40,9 @@ html lang="en"
                     div class="hidden-nav-content"
                       ul
                         li
-                          a href="#" New post
+                          a href="/new/post" New post
                         li
-                          a href="#" New project
+                          a href="/new/project" New project
                 li
                   button type='button'
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -56,12 +56,32 @@ html lang="en"
                     div class="hidden-nav-content"
                       ul
                         li
-                          a href="#" Account
+                          a href="/account" Account
                         li
-                          a href="#" Log out
+                          a href="/logout" Log out
       div class="content"
+        - if  request.path_info == "/new/post"
+          div class="side-menu-left"
+            div class="post-menu"
+              
+              ul
+                li class="active"
+                  | POST CREATION
+                li
+                  button type='button' onclick="Post.addField('text')" = "+ Text"
+                li
+                  button type='button' + Header
+                  div class="headingsMenu"
+                    ul
+                      li
+                        button type='button' onclick="Post.addField('h3')" + Header 3
+                      li
+                        button type='button' onclick="Post.addField('h4')" + Header 4
+                li
+                  button type='button' onclick="Post.addField('quote')" + Quote
+                li
+                  button type='button' onclick="Post.addField('img')" + Image
         main
-          -if session[:user] != nil
           == yield
       div class="footer"
       footer
