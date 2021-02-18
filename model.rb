@@ -4,6 +4,52 @@ def connect_to_db()
   return db
 end
 
+# user class
+class User
+  attr_reader :userId, :username
+  def initialize(username, userId)
+    @username = username
+    @userId = userId
+  end
+
+  def projects()
+    db = connect_to_db()
+    return db.execute("SELECT * FROM projects WHERE userId=?", @userId)
+  end
+
+  def posts(projectId)
+    db = connect_to_db()
+    return db.execute("SELECT * FROM posts WHERE projectId=?", projectId)
+  end
+
+  def post(projectId, postTitle)
+    posts(projectId).each do |post|
+      if post["postTitle"] = postTitle
+        return post
+      end
+    end
+  end
+end
+
+# Work in progress
+class Project
+  attr_reader :projectTitle
+  def initialize()
+  end
+  
+  def projectId()
+    db = connect_to_db()
+    db.execute("SELECT projectId FROM projects")
+  end
+end
+
+# Work in progress
+class Post
+  attr_accessor :postId, :p
+  def initialize()
+  end
+end
+
 # user crud
 def register_user(username, password, confirm_password)
   # #check if anything is wrong with username or passwords such that 
@@ -43,11 +89,7 @@ def login_user(username, password)
     db_pwdigest = result["pwdigest"]
     id = result["id"]
     if BCrypt::Password.new(db_pwdigest) == password #Check if password is right
-      session[:user] = {
-        username: username,
-        userId: id,
-        pwDigest: db_pwdigest
-      }
+      session[:user] = User.new(username, id)
       redirect('/home')
     else #Password was wrong
       session[:errormsg] = "User does not exist or the password was wrong, please try again."
@@ -103,5 +145,11 @@ end
 def img_to_imgfolder()
 end
 
+# tags
+def get_tags()
+  db = connect_to_db()
+  tags = db.execute("SELECT * FROM tags")
+  return tags
+end
 
 p "model.rb loaded"

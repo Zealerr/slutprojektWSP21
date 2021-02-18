@@ -6,14 +6,13 @@ html lang="en"
 
     title Blue Serpent
     link rel="stylesheet" href="/css/style.css" type="text/css"/
-    / link rel="stylesheet" href="/css/primitive.css"/
   body
     div class="pagewrapper"
       div.header
       header
         div class="logo"
           a href="/" 
-            img src="/img/long_white_transparent_logo.png"
+            img src="/img/logos/long_white_transparent_logo.png"
         nav
             ul class="menu"
               li
@@ -52,7 +51,7 @@ html lang="en"
                   div class="hidden-nav-menu"
                     div class="heading"
                         h3 
-                          | #{session[:user][:username]}
+                          | #{session[:user].username}
                     div class="hidden-nav-content"
                       ul
                         li
@@ -86,4 +85,3 @@ html lang="en"
       div class="footer"
       footer
         p <span>BLUE SERPENT</span> By Felix Rosenberg
-    script src="/js/postCreation.js"

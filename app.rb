@@ -8,10 +8,7 @@ enable :sessions
 # help functions
 def testUser()
     # temp user logged in
-    user = {
-        username: "Admin",
-        userId: 1
-    }
+    user = User.new("Admin", 1)
     session[:user] = user
 end
 
@@ -29,10 +26,10 @@ def for_user()
   end
 end
 def get_userId() 
-  return session[:user][:userId]
+  return session[:user].userId
 end
 def get_username()
-  return session[:user][:username]
+  return session[:user].username
 end
 
 # Authorization
@@ -111,15 +108,9 @@ end
 
 # create post page
 get ('/new/post') do
+  testUser()
   for_user
-  db = SQLite3::Database.new('db/blog.db')
-  db.results_as_hash = true
-  projects = db.execute("SELECT * FROM projects WHERE userId=?", session[:user][:userId])
-  projectTitles = []
-  projects.each do |project|
-      projectTitles << project["projectTitle"]
-  end
-  slim(:"posts/create", locals:{projectTitles: projectTitles})
+  slim(:"posts/create")
 end
 
 # upload post

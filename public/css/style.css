@@ -256,7 +256,7 @@ main {
     top: 20px;
 }
 
-.static-input label{
+.static-input label, .base-input label{
     color: var(--lighttextcolor);
 }
 
@@ -308,6 +308,34 @@ main {
     -webkit-text-fill-color: var(--lighttextcolor) !important;
 }
 
+.tags-input{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.post-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    margin: 0px 0px 5px 5px;
+    background-color: var(--headercolor);
+    border-radius: 10px;
+}
+
+.post-checkbox label {
+    padding-left: 5px;
+}
+
+.post-checkbox * {
+    cursor: pointer;
+}
+
+.post-tag input {
+    background-color: var(--backgroundColor);
+}
 
 .dynamic-input input[type="file"] {
     border: none;
@@ -420,11 +448,23 @@ main {
 
 }
 
+.post-isPublic {
+    height: 30px;
+    line-height: 30px;
+}
+
+.post-isPublic label{
+    margin-right: 5px;
+}
+
+
 .hidden-post-form * {
     background-color: transparent
 }
 
-
+.hidden-post-form {
+    display: none;
+}
 
 
 

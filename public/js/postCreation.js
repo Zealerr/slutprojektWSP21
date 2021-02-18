@@ -4,6 +4,9 @@ const post_form = document.getElementsByClassName("hidden-post-form")[0]
 const post_menu = document.getElementsByClassName("post-menu")[0]
 const last = "beforeend"
 
+// post tag input
+
+
 // Post creation namespace for ease of use
 var Post = {
   loadFile: (id) => {
