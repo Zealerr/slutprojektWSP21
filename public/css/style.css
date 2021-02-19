@@ -186,19 +186,24 @@ header nav {
 
 /* Content placement*/
 
-.content {
+main {
     grid-area: content;
     display: grid;
     grid-template-columns: 150px 1100px;
     grid-template-areas: "side-menu-left main";
 }
 
-main {
+.creation {
     grid-column: main;
     width: 100%;
     display: grid;
     grid-template-columns: 950px 150px;
+    grid-template-rows: 300px auto;
     grid-template-areas: "posts side-menu-right";
+}
+
+.dynamic-form {
+    grid-column: posts;
 }
 
 .side-menu-left {
@@ -206,7 +211,7 @@ main {
     border-right: 1px solid var(--darktextcolor);
 }
 
-.side-menu-right {
+.creation-form-right {
     grid-column: side-menu-right;
 }
 
@@ -251,16 +256,16 @@ main {
     background-color: var(--darker);
 }
 
-.static-input {
+.creation-form-right {
     margin-top: 20px;
     top: 20px;
 }
 
-.static-input label, .base-input label{
+.creation-form-right label, .base-input label{
     color: var(--lighttextcolor);
 }
 
-.static-input select{
+.creation-form-right select{
     background-color: var(--headercolor);
     color: var(--lighttextcolor);
     height: 25px;
@@ -268,7 +273,7 @@ main {
     border-radius: 3px;
 }
 
-.static-input option{
+.creation-form-right option{
     color: var(--lighttextcolor);
     width: 150px;
 }
@@ -277,10 +282,11 @@ main {
 /* post design currently only used by creation form */
 
 
-.post-form {
+.creation-form {
     grid-column: posts;
     width: 100%;
     margin-top: 30px;
+    height: 270px;
 }
 
 .base-input, .dynamic-input {
@@ -288,7 +294,7 @@ main {
     margin-right: 5%;
 }
 
-.post-form input, .post-form textarea {
+.creation input, .creation textarea {
     background-color: transparent;
     border: none;
     border-left: 2px solid grey;
@@ -296,16 +302,18 @@ main {
     color: var(--lighttextcolor);
 }
 
-.post-form input:-webkit-autofill,
-.post-form input:-webkit-autofill:hover, 
-.post-form input:-webkit-autofill:focus, 
-.post-form input:-webkit-autofill:active  {
+.creation-form input:-webkit-autofill,
+.creation-form input:-webkit-autofill:hover, 
+.creation-form input:-webkit-autofill:focus, 
+.creation-form input:-webkit-autofill:active  {
+    box-shadow: 0 0 0 30px var(--backgroundColor) inset;
     -webkit-box-shadow: 0 0 0 30px var(--backgroundColor) inset !important;
 }
 
 /*Change text in autofill textbox*/
-.post-form input:-webkit-autofill {
+.creation-form input:-webkit-autofill {
     -webkit-text-fill-color: var(--lighttextcolor) !important;
+
 }
 
 .tags-input{
@@ -315,7 +323,7 @@ main {
     margin-bottom: 10px;
 }
 
-.post-checkbox {
+.post-checkbox, .project-checkbox {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -325,28 +333,24 @@ main {
     border-radius: 10px;
 }
 
-.post-checkbox label {
+.post-checkbox label, .project-checkbox label{
     padding-left: 5px;
 }
 
-.post-checkbox * {
+.post-checkbox *, .project-checkbox * {
     cursor: pointer;
-}
-
-.post-tag input {
-    background-color: var(--backgroundColor);
 }
 
 .dynamic-input input[type="file"] {
     border: none;
 }
 
-.post-form input:hover, .post-form textarea:hover {
+.creation-form input:hover, .dynamic-form textarea:hover {
     background-color: var(--darker);
     
 }
 
-.post-form input:focus, .post-form textarea:focus {
+.creation-form input:focus, .dynamic-form textarea:focus {
     background-color: var(--darker);
     outline: 1px solid grey;
 }
@@ -372,7 +376,7 @@ main {
     margin-bottom: 10px;
 }
 
-.dynamic-input-img input {
+.dynamic-input-img input{
     margin-top: 10px;
     height: 30px;
     background-color: transparent;
@@ -394,7 +398,7 @@ main {
 
 .dynamic-input-img img {
     position: relative;
-    max-width: 90%;
+    max-width: 100%;
     object-fit: cover;
     top: 50%;
     left: 50%;
@@ -417,7 +421,7 @@ main {
     margin-left: 10px;
 }
 
-.post-delete-input button, .static-input button  {
+.post-delete-input button, .creation-form-right button  {
     cursor: pointer;
     height: 30px;
     background-color:var(--backgroundColor);
@@ -431,38 +435,39 @@ main {
     margin-bottom: 1px;
 }
 
-.post-delete-input button:hover, .static-input button:hover {
+.post-delete-input button:hover, .creation-form-right button:hover {
     background-color: var(--darker);
 }
 
-.post-delete-input button:active, .static-input button:active {
+.post-delete-input button:active, .creation-form-right button:active {
     background-color: var(--backgroundColor);
     margin-top: 11px;
     margin-bottom: 0px;
     color: grey;
 }
 
-.post-delete-input button:focus, .static-input button:focus {
+.post-delete-input button:focus, .creation-form-right button:focus {
     outline: 1px solid grey;
     background-color: var(--darker);
 
 }
 
-.post-isPublic {
+.isPublic {
+    margin-top: 5px;
     height: 30px;
     line-height: 30px;
 }
 
-.post-isPublic label{
+.isPublic label{
     margin-right: 5px;
 }
 
 
-.hidden-post-form * {
+/* .hidden-post-form * {
     background-color: transparent
-}
+} */
 
-.hidden-post-form {
+.hidden {
     display: none;
 }
 

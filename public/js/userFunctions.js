@@ -1,7 +1,3 @@
-const userNav = document.getElementsByClassName("user-menu")[0]
-var User = {
-  
-}
 
 
 // trash that I do not want to delete ;)

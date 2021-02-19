@@ -17,7 +17,7 @@ def loggedIn()
 end
 def not_for_user()
   if loggedIn()
-    redirect('/new/post')
+    redirect('/posts/new')
   end
 end
 def for_user()
@@ -73,7 +73,7 @@ get ('/logout') do
 end
 
 # account info site
-get ('/account') do
+get ('user/account') do
   for_user
   slim(:"users/account")
 end
@@ -107,30 +107,51 @@ get ('/:username/projects') do
 end
 
 # create post page
-get ('/new/post') do
+get ('/posts/new') do
   testUser()
   for_user
-  slim(:"posts/create")
+  slim(:"posts/new")
 end
 
 # upload post
-post ('/posts/create') do
-  postProject = params[:postProject]
-  postTitle = params[:postTitle]
-  postDesc = params[:postDesc]
-  postContent = params[:postContent]
-  postDate = params[:postDate]
-  if params[:postIsDraft] == "on" # if isDraft is checked
-    postIsDraft = 1
-  else 
-    postIsDraft = 0
+post ('/posts/new') do
+  userId = get_userId
+  projectId = params[:projectId]
+  # check if project exists and is owned by current user
+  if !check_project(userId, projectId)
+    p "project is not yours, please select from the menu and not through console"
+    redirect('/posts/new')
   end
+  postTitle = params[:title]
+  # check if post with that title already exist in the specific project
+  if check_post(postTitle, projectId)
+    p "A post with that name already exists"
+    redirect('/posts/new')
+  end
+  postDesc = params[:desc]
+  postContent = params[:content]
+  postDate = params[:postDate]
   if params[:postIsPublic] == "on" # if isPublic is checked
     postIsPublic = 1
   else 
     postIsPublic = 0
   end
-  userId = get_userId
-  new_post(userId, postProject, postTitle, postDesc, postContent, postDate, postIsPublic, postIsDraft)
+  postTags = params[:tags]
+  
+
+  post = Post.new(projectId, postTitle, postDesc, postContent, postDate, postIsPublic, postTags)
+  new_post(userId, post)
+  redirect('/')
+end
+
+# create project page
+get ('/projects/new') do
+  testUser()
+  for_user
+  slim(:"projects/new")
+end
+
+post ('/projects/new') do
+  p params[:"projectImg#{}"]
   redirect('/')
 end

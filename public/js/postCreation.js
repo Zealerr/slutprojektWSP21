@@ -1,13 +1,9 @@
 var img_counter = 0
-const post_creation_form = document.getElementsByClassName("post-form")[0]
-const post_form = document.getElementsByClassName("hidden-post-form")[0]
-const post_menu = document.getElementsByClassName("post-menu")[0]
+const creation_form = document.getElementsByClassName("creation-form")[0]
+const dynamic_form = document.getElementsByClassName("dynamic-form")[0]
 const last = "beforeend"
 
-// post tag input
-
-
-// Post creation namespace for ease of use
+// Post creation namespace for ease-of-use
 var Post = {
   loadFile: (id) => {
     var output = document.getElementById(id);
@@ -17,7 +13,7 @@ var Post = {
     var dynamicInput = document.createElement('div')
     var input = ``
     dynamicInput.classList.add("dynamic-input")
-    if (type == "quote" || type == "h2" || type == "h3" || type == "h4") {
+    if (type == "quote" || type == "h3" || type == "h4") {
       input = `
       <input class="post-${type}" type="text" placeholder="This is a ${type} here...">
       
@@ -43,7 +39,7 @@ var Post = {
     dynamicInput.innerHTML = input + deleteButton
 
     // add remove button funktionality with eventlistener
-    let element = post_creation_form.insertAdjacentElement(last, dynamicInput)
+    let element = dynamic_form.insertAdjacentElement(last, dynamicInput)
     if (type == "img") {
       child = element.children[2].children[0]
       let img = element.children[0].children[0]
@@ -58,122 +54,152 @@ var Post = {
       element.remove()
     });
   },
-  createPostHTML: (type) => {
+  reformCreationForm: () => {
     // main variables
-    let post = ""
-    let dynamicContent = []
-    let baseInputs = post_creation_form.children[0].children
-    let formInputs = post_creation_form.children
-    inputs = []
 
-    // select all but baseInputs -> Did not find a better way to select all
-    // but first child of post_creation_form.
-    for (i = 1; i < post_creation_form.children.length; i++) {
-      inputs.push(formInputs[i].children)
-    }
+    // gather all html in this
+    let postContent = ""
+    // get all divs with inputs
+    let dynamicDivs = dynamic_form.children
+    let dynamicDivsChildren = []
+    // gather all inputs in this list
+    inputs = []
     
-    // go trough input list and get textarea or input and add to 
-    for (i = 0; i < inputs.length; i++) {
-      for (j = 0; j < inputs[i].length; j++) {
-        if (inputs[i][j].nodeName == "INPUT" || inputs[i][j].nodeName == "TEXTAREA") {
-          dynamicContent.push(inputs[i][j])
+    // go trough div list and get textarea or input and add to inputs
+    for (i = 0; i < dynamicDivs.length; i++) {
+      dynamicDivsChildren = (dynamicDivs[i].children)
+      for (j = 0; j < dynamicDivsChildren.length; j++) {
+        input = dynamicDivsChildren[j]
+        if (input.nodeName == "INPUT" || input.nodeName == "TEXTAREA") {
+          inputs.push(input)
         }
       }
     }
     // get value of content and create html blocks with it
-    for (i = 0; i < dynamicContent.length; i++) {
-      let inputClass = dynamicContent[i].classList[0]
+    for (i = 0; i < inputs.length; i++) {
+      let inputClass = inputs[i].classList[0]
       let html = ""
       switch (inputClass) {
-        case "post-h1":
-          html = `<h1> ${dynamicContent[i].value} </h1>`
-          break;
-        case "post-h2":
-          html = `<h2> ${dynamicContent[i].value} </h2>`
-          break;
         case "post-h3":
-          html = `<h3> ${dynamicContent[i].value} </h3>`
+          html = `<h3>${inputs[i].value}</h3>`
           break;
         case "post-h4":    
-          html = `<h4> ${dynamicContent[i].value} </h4>`
+          html = `<h4>${inputs[i].value}</h4>`
           break;
         case "post-quote":
-          html = `<blockquote>${dynamicContent[i].value}</blockquote>`
+          html = `<blockquote>${inputs[i].value}</blockquote>`
           break;
         case "post-text":  
-          html = `<p>${dynamicContent[i].value}</p>`
+          html = `<p>${inputs[i].value}</p>`
           break;
         case "post-img-input":  
-          imgName = dynamicContent[i].value
+          imgName = inputs[i].value
           imgName = imgName.slice(12)
           html = `<figure><img alt="${imgName}" src="/img/${imgName}"></figure>`
           break;
         default:
           console.log("Does not have the right class")
       }
-      post = post + html
+      postContent = postContent + html
     }
-    
-    // input name="postProject" type="text"
-    // input name="postTitle" type="text"
-    // input name="postDesc" type="text"
-    // input name="postContent" type="text"
-    // input name="postDate" type="date"
-    // input name="isDraft" type="checkbox"
+    // add postContent to content input
+    contentInput = document.getElementById("contentInput")
+    contentInput.value = postContent
 
-    // get project choice and put in post_form
-    project = document.getElementById("project").value
-    projectInput = document.getElementById("postProjectInput")
-    projectInput.value = project
-    // post title 
-    titleInput = document.getElementById("postTitleInput")
-    titleInput.value = baseInputs[0].value
-    // post description
-    descInput = document.getElementById("postDescInput")
-    descInput.value = baseInputs[1].value
-    // post content
-    contentInput = document.getElementById("postContentInput")
-    contentInput.value = post
-    // post date
-    dateInput = document.getElementById("postDateInput")
-    dateInput.value = baseInputs[2].value
-    // post is draft
-    if (type == "draft") {
-      isDraftInput = document.getElementById("postIsDraftInput")
-      isDraftInput.checked = true
-    } else if (type == "publish") {
-      isDraftInput = document.getElementById("postIsDraftInput")
-      isDraftInput.checked = false
+
+    // post tags
+    tagsInput = document.getElementById("tagsInput")
+    tags = document.getElementsByClassName("post-tag")
+    tagInputs = []
+    for (i = 0; i < tags.length; i++) {
+      input = tags[i].children[0]
+      if (input.checked) {
+        tagInputs.push(input.value)
+      }
     }
+    tagsInput.value = tagInputs
 
-    // post isPublic
-      isPublicInput = document.getElementById("postIsPublicInput")
-      isPublicCheckbox = document.getElementById("isPublicCheckbox")
-      isPublicInput.checked = isPublicCheckbox.checked
+    // add img files to array and 
+
+  },
+  savePostTemp: () => {
+    localStorage.setItem("draft", JSON.stringify(creation_form));
+  },
+  loadPostTemp: () => {
+    if (JSON.parse(localStorage.getItem("draft")) !== null) {
+      draft = JSON.parse(localStorage.getItem("draft"));
+      creation_form = draft
+    }
   }
 }
 
-// add eventlistener to save draft button and publish button
-let saveDraftButton = document.getElementById("saveDraftButton")
+// add eventlistener to publish button
 let publishButton = document.getElementById("publishButton")
-
-if (saveDraftButton != undefined) {
-  saveDraftButton.addEventListener("click", function() {
-    Post.createPostHTML("draft")
-    post_form.submit()
-  })
-}
 
 if (publishButton != undefined) {
   publishButton.addEventListener("click", function() {
-    Post.createPostHTML("publish")
-    post_form.submit()
+    Post.reformCreationForm()
+    Post.savePostTemp()
+    creation_form.submit()
   })
 }
 
+//// eventually make it possible to save as draft and edit.
+// let saveDraftButton = document.getElementById("saveDraftButton")
+
+
+// if (saveDraftButton != undefined) {
+//   saveDraftButton.addEventListener("click", function() {
+//     Post.reformCreationForm("draft")
+//     post_form.submit()
+//   })
+// }
+
+Post.loadPostTemp()
+
+
+
+
+
+// // get project choice and put in post_form
+// project = document.getElementById("project").value
+// projectInput = document.getElementById("postProjectInput")
+// projectInput.value = project
+// // post title 
+// titleInput = document.getElementById("postTitleInput")
+// titleInput.value = baseInputs[1].value
+// // post description
+// descInput = document.getElementById("postDescInput")
+// descInput.value = baseInputs[2].value
+// // post content
+// contentInput = document.getElementById("postContentInput")
+// contentInput.value = post
+// // post date
+// dateInput = document.getElementById("postDateInput")
+// dateInput.value = baseInputs[3].value
+// // post is draft
+// if (type == "draft") {
+//   isDraftInput = document.getElementById("postIsDraftInput")
+//   isDraftInput.checked = true
+// } else if (type == "publish") {
+//   isDraftInput = document.getElementById("postIsDraftInput")
+//   isDraftInput.checked = false
+// }
+
+// // post isPublic
+// isPublicInput = document.getElementById("postIsPublicInput")
+// isPublicCheckbox = document.getElementById("isPublicCheckbox")
+// isPublicInput.checked = isPublicCheckbox.checked
+    
+
+
+
+
+
+
 
 // imgFile = inputs[i][j].files
-//           dynamicContent.push(imgFile)
+//           dynamicDivs.push(imgFile)
 //           console.log(imgFile)
 //           if (imgFile == undefined) {
 //             value = inputs[i][j].value

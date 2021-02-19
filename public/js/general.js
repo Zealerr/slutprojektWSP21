@@ -1,0 +1,1 @@
+// function for highlighting current page for logged in user.

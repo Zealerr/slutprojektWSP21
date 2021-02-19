@@ -45,8 +45,15 @@ end
 
 # Work in progress
 class Post
-  attr_accessor :postId, :p
-  def initialize()
+  attr_accessor :projectId, :title, :desc, :content, :date, :isPublic, :tags
+  def initialize(projectId, title, desc, content, date, isPublic, tags)
+    @projectId = projectId
+    @title = title
+    @desc = desc
+    @content = content
+    @date = date
+    @isPublic = isPublic
+    @tags = tags
   end
 end
 
@@ -103,7 +110,7 @@ end
 def delete_user()
 end
 
-# post crud
+# project crud
 def new_project()
 end
 def delete_project()
@@ -112,33 +119,54 @@ def update_project()
 end
 def get_project(userId, projectTitle)
 end
+def check_project(userId, projectId)
+  db = connect_to_db
+  project = db.execute("SELECT * FROM projects WHERE userId=? AND projectId=?", userId, projectId).first
+  return project != nil ? true : false
+end
 
 def attach_tags_to_project()
 end
 def detach_tags_from_project()
 end
 
-
 # post crud
-def new_post(userId, project, title, desc, content, date, isPublic, isDraft)
+def get_post(value, type)
   db = connect_to_db()
-  project = db.execute("SELECT * FROM projects WHERE projectTitle=?", project).first
-  projectId = project["projectId"]
-  db.execute("INSERT INTO posts (postTitle, postDesc, postDate, postContent, postIsDraft, postIsPublic, projectId) VALUES (?,?,?,?,?,?,?)", title, desc, date, content, isDraft, isPublic, projectId)
+  if type == "title"
+    post = db.execute("SELECT * FROM posts WHERE postTitle=?", value).first
+    return post
+  elsif type == "id"
+    post = db.execute("SELECT * FROM posts WHERE postId=?", value).first
+    return post
+  end
+end
+def new_post(userId, post)
+  db = connect_to_db()
+  db.execute("INSERT INTO posts (postTitle, postDesc, postDate, postContent, postIsPublic, projectId) VALUES (?,?,?,?,?,?)", post.title, post.desc, post.date, post.content, post.isPublic, post.projectId)
+  newPost = db.execute("SELECT * FROM posts WHERE postTitle=?", post.title).first
+  attach_tags_to_post(newPost, post.tags)
 end
 def delete_post()
 end
 def update_post()
 end
-def get_post(postTitle)
-  db = connect_to_db()
-  post = db.execute("SELECT * FORM posts WHERE postTitle=?", postTitle)
-  return post
+
+def check_post(postTitle, projectId)
+  db = connect_to_db
+  post = db.execute("SELECT * FROM posts WHERE postTitle=? AND projectId=?", postTitle, projectId).first
+  return post != nil ? true : false
 end
 
-def attach_tags_to_post()
+def attach_tags_to_post(post, tags)
+  db = connect_to_db
+  tags = tags.split(",")
+  tags.each do |tag|
+    db.execute("INSERT INTO post_tag_rel (postId, tagId) VALUES (?,?)", post["postId"], tag)
+  end
 end
 def detach_tags_from_post()
+
 end
 
 # upload img to img folder

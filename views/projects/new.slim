@@ -1,0 +1,40 @@
+form class="post-form" enctype="multipart/form-data"
+  div class="base-input"
+    .tags-input
+      -tags = get_tags()
+      -tags.each do |tag|
+        div class="project-tag project-checkbox"
+          input id="tag-#{tag["tagName"]}" type="checkbox" value="#{tag["tagId"]}" 
+          label for="tag-#{tag["tagName"]}" #{tag["tagName"]}
+    input class='post-h1' type='text' placeholder='Project title' onkeydown="return event.key != 'Enter';"
+    textarea cols="20" rows="6" class="post-h2" type="text"placeholder="Project description..."
+    -if Time.now.month < 10
+      -month = "0" + "#{Time.now.month}"
+    -date = "#{Time.now.year}-" + "#{month}-" + "#{Time.now.day}"
+    input class='post-date' type='date' name='date' value="#{date}"
+    div class="dynamic-input dynamic-input-img" id="project-img-div"
+      figure
+        img class="post-img" id="project-img" alt="your image" src="/img/empty_image.png"
+      input class="project-img-input" type="file" accept="image"
+  // == räknas som kod medans = räknas som string värde
+div class="side-menu-right"
+  div class="static-input"
+      div class="post-isPublic"
+        label for="isPublic" Public
+        input id="isPublicCheckbox" type="checkbox"
+      / button id="saveDraftButton" type="button" = "Save Draft"
+      button id="publishButton" type="button" = "Publish"
+
+form id="hidden-post-form" class="hidden-post-form" action="/projects/create" method="post" enctype="multipart/form-data"
+  input id="TitleInput" name="postTitle" type="text"
+  input id="DescInput" name="postDesc" type="text"
+  input id="postTagsInput" name="postTags" type="text"
+script src="/js/postCreation.js"
+
+javascript:
+  img_div = document.getElementById("project-img-div")
+  img = img_div.children[0].children[0]
+  input = img_div.children[1]
+  input.addEventListener("change", function() {
+    Post.loadFile(img.id)
+  })
