@@ -1,4 +1,5 @@
 var img_counter = 0
+const creationDiv = document.getElementsByClassName("creation")[0]
 const creation_form = document.getElementsByClassName("creation-form")[0]
 const dynamic_form = document.getElementsByClassName("dynamic-form")[0]
 const last = "beforeend"
@@ -44,6 +45,7 @@ var Post = {
       child = element.children[2].children[0]
       let img = element.children[0].children[0]
       let input = element.children[1]
+      img_counter++
       input.addEventListener("change", function() {
         Post.loadFile(img.id)
       })
@@ -96,6 +98,8 @@ var Post = {
           imgName = inputs[i].value
           imgName = imgName.slice(12)
           html = `<figure><img alt="${imgName}" src="/img/${imgName}"></figure>`
+          // move file to imgFiles
+          
           break;
         default:
           console.log("Does not have the right class")
@@ -122,14 +126,17 @@ var Post = {
     // add img files to array and 
 
   },
-  savePostTemp: () => {
-    localStorage.setItem("draft", JSON.stringify(creation_form));
-  },
-  loadPostTemp: () => {
-    if (JSON.parse(localStorage.getItem("draft")) !== null) {
-      draft = JSON.parse(localStorage.getItem("draft"));
-      creation_form = draft
-    }
+  allInputs: () => {
+    //projectId, title, desc, content, date, isPublic, tag
+    content = document.getElementById("contentInput").value
+    tags = document.getElementById("tagsInput").value
+    title = document.getElementById("titleInput").value
+    desc = document.getElementById("descInput").value
+    date = document.getElementById("dateInput").value
+    projectId = document.getElementById("project").value
+    isPublic = document.getElementById("isPublic").checked
+    let inputs = [projectId, title, desc, content, date, isPublic, tags]
+    return inputs
   }
 }
 
@@ -139,9 +146,26 @@ let publishButton = document.getElementById("publishButton")
 if (publishButton != undefined) {
   publishButton.addEventListener("click", function() {
     Post.reformCreationForm()
-    Post.savePostTemp()
-    creation_form.submit()
+    console.log(Post.allInputs())
+    // creation_form.submit()
   })
+}
+
+let localDraftButton = document.getElementById("localDraftButton")
+
+if (localDraftButton != undefined) {
+  localDraftButton.addEventListener("click", function() {
+  })
+}
+
+function testMoveImgFiles() {
+  let imgInput = document.getElementById("imgInput")
+  images = document.getElementsByClassName("post-img-input")
+  console.log(imgInput.files)
+  console.log(images[0])
+  for (i = 0; i < images.length; i++) {
+    console.log(images[i].files[0])
+  }
 }
 
 //// eventually make it possible to save as draft and edit.
@@ -154,11 +178,6 @@ if (publishButton != undefined) {
 //     post_form.submit()
 //   })
 // }
-
-Post.loadPostTemp()
-
-
-
 
 
 // // get project choice and put in post_form

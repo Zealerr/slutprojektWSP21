@@ -166,7 +166,6 @@ def attach_tags_to_post(post, tags)
   end
 end
 def detach_tags_from_post()
-
 end
 
 # upload img to img folder

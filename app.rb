@@ -130,12 +130,8 @@ post ('/posts/new') do
   end
   postDesc = params[:desc]
   postContent = params[:content]
-  postDate = params[:postDate]
-  if params[:postIsPublic] == "on" # if isPublic is checked
-    postIsPublic = 1
-  else 
-    postIsPublic = 0
-  end
+  postDate = params[:date]
+  postIsPublic = params[:isPublic]
   postTags = params[:tags]
   
 

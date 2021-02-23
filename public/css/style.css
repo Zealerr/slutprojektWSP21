@@ -54,6 +54,7 @@ body {
     grid-template-areas: "not1 header not2" "not3 content not4" "not5 footer not6";
 }
 
+
 .header {
     grid-row: header;
     grid-column-start: not1;
@@ -78,16 +79,9 @@ header {
     grid-row: header;
     grid-column: header;
     display: grid;
-    grid-template-columns: 234px 1fr;
+    grid-template-columns: 234px auto;
     grid-template-areas: "logo nav";
     height: var(--headerheight);
-}
-
-@media only screen and (max-width: 1250px) {
-
-    .pagewrapper {
-        grid-template-columns: 0px auto 0px;
-    }
 }
 
 
@@ -198,11 +192,11 @@ main {
     width: 100%;
     display: grid;
     grid-template-columns: 950px 150px;
-    grid-template-rows: 300px auto;
     grid-template-areas: "posts side-menu-right";
+    height: unset;
 }
 
-.dynamic-form {
+.center {
     grid-column: posts;
 }
 
@@ -283,10 +277,9 @@ main {
 
 
 .creation-form {
-    grid-column: posts;
     width: 100%;
     margin-top: 30px;
-    height: 270px;
+    display: inline-block;
 }
 
 .base-input, .dynamic-input {
@@ -345,17 +338,16 @@ main {
     border: none;
 }
 
-.creation-form input:hover, .dynamic-form textarea:hover {
+.creation-form input:hover, .creation textarea:hover {
     background-color: var(--darker);
-    
 }
 
-.creation-form input:focus, .dynamic-form textarea:focus {
+.creation-form input:focus, .creation textarea:focus {
     background-color: var(--darker);
     outline: 1px solid grey;
 }
 
-.dynamic-input textarea {
+.dynamic-input textarea, .creation textarea {
     resize: vertical;
 }
 
@@ -471,8 +463,25 @@ main {
     display: none;
 }
 
+@media only screen and (max-width: 1250px) {
+    .pagewrapper {
+        grid-template-columns: 0px auto 0px;
+    }
 
+    header, main, footer {
+        width: 100vw;
+    }
 
+    main {
+        grid-template-columns: 150px auto;
+    }
+
+    .creation {
+        grid-template-columns: auto 150px;
+        grid-template-rows: minmax(300px, ) auto;
+    }
+
+}
 
 
 
