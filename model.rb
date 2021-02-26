@@ -169,7 +169,19 @@ def detach_tags_from_post()
 end
 
 # upload img to img folder
-def img_to_imgfolder()
+def upload_images(list)
+  list.each do |img|
+    if img[:filename]
+      filename = img[:filename]
+      file = img[:tempfile]
+      path = "./public/uploads/#{filename}"
+
+      # Write file to disk
+      File.open(path, 'wb') do |f|
+        f.write(file.read)
+      end
+    end
+  end
 end
 
 # tags

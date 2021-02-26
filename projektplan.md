@@ -41,3 +41,13 @@ URL(routes) | HTTP Verb | Action | Förklaring
 /posts/:postTitle/edit | GET | edit | visa (ifyllt) edit-formulär för en artikel i ett projekt
 /posts/:postTitle/update | POST | update | uppdatera en artikel
 /tag/:tag | GET | index | visa alla projekt och deras artiklar med den taggen
+
+## 6. Att göra
+- Fixa skapa projekt
+- Fixa signup
+- Fixa login
+- Fixa se account -> se alla project och deras posts, ska kunna slänga posts på detta vis.
+- Fixa Visa projects
+- Fixa Visa "preview" av posts
+- Fixa Visa Hela posts
+- Fixa välja bild från lista istället för att ladda upp varje gång

@@ -5,19 +5,6 @@ const dynamic_form = document.getElementsByClassName("dynamic-form")[0]
 const imgButton = document.getElementById("imgButton")
 const last = "beforeend"
 
-function toggleImgButton() {
-  if (img_counter == 5) {
-    imgButton.classList.add("disabledButton")
-    imgButton.textContent = "Max img count"
-    imgButton.disabled = true
-  } else {
-    imgButton.classList.remove("disabledButton")
-    imgButton.textContent = "+ Image"
-    imgButton.disabled = false
-  }
-}
-
-
 
 // Post creation namespace for ease-of-use
 var Post = {
@@ -117,7 +104,7 @@ var Post = {
         case "post-img-input":  
           imgName = inputs[i].value
           imgName = imgName.slice(12)
-          html = `<figure><img alt="${imgName}" src="/img/${imgName}"></figure>`
+          html = `<figure><img alt="${imgName}" src="/img/uploads/${imgName}"></figure>`
           // move file to imgFiles
           
           break;
@@ -159,6 +146,20 @@ var Post = {
     return inputs
   }
 }
+
+function toggleImgButton() {
+  if (img_counter == 5) {
+    imgButton.classList.add("disabledButton")
+    imgButton.textContent = "Max img count"
+    imgButton.disabled = true
+  } else {
+    imgButton.classList.remove("disabledButton")
+    imgButton.textContent = "+ Image"
+    imgButton.disabled = false
+  }
+}
+
+
 
 // add eventlistener to publish button
 let publishButton = document.getElementById("publishButton")
