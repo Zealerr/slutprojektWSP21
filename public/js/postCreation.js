@@ -2,7 +2,22 @@ var img_counter = 0
 const creationDiv = document.getElementsByClassName("creation")[0]
 const creation_form = document.getElementsByClassName("creation-form")[0]
 const dynamic_form = document.getElementsByClassName("dynamic-form")[0]
+const imgButton = document.getElementById("imgButton")
 const last = "beforeend"
+
+function toggleImgButton() {
+  if (img_counter == 5) {
+    imgButton.classList.add("disabledButton")
+    imgButton.textContent = "Max img count"
+    imgButton.disabled = true
+  } else {
+    imgButton.classList.remove("disabledButton")
+    imgButton.textContent = "+ Image"
+    imgButton.disabled = false
+  }
+}
+
+
 
 // Post creation namespace for ease-of-use
 var Post = {
@@ -17,9 +32,8 @@ var Post = {
     if (type == "quote" || type == "h3" || type == "h4") {
       input = `
       <input class="post-${type}" type="text" placeholder="This is a ${type} here...">
-      
       `
-    } else if (type == "text") { 
+    } else if (type == "text") {
       input = `
       <textarea class="post-text" cols="30" rows="5" placeholder="Write your text here..." rows="5" type="text"></textarea>
       `
@@ -29,8 +43,10 @@ var Post = {
       <figure>
         <img class="post-img" id="post-img-${img_counter}" alt="your image" src="/img/empty_image.png">
       </figure>
-      <input class="post-img-input" type="file" accept="image" >
+      <input class="post-img-input" name="img[]" type="file" accept="image" form="creation-form">
       `
+      img_counter++
+      toggleImgButton()
     }
     var deleteButton = `
     <div class="post-delete-input">
@@ -45,16 +61,20 @@ var Post = {
       child = element.children[2].children[0]
       let img = element.children[0].children[0]
       let input = element.children[1]
-      img_counter++
       input.addEventListener("change", function() {
         Post.loadFile(img.id)
       })
+      child.addEventListener("click", function(e) {
+        element.remove()
+        img_counter--
+        toggleImgButton()
+      });
     } else {
       child = element.children[1].children[0]
+      child.addEventListener("click", function(e) {
+        element.remove()
+      });
     }
-    child.addEventListener("click", function(e) {
-      element.remove()
-    });
   },
   reformCreationForm: () => {
     // main variables
@@ -147,7 +167,7 @@ if (publishButton != undefined) {
   publishButton.addEventListener("click", function() {
     Post.reformCreationForm()
     console.log(Post.allInputs())
-    // creation_form.submit()
+    creation_form.submit()
   })
 }
 

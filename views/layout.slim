@@ -12,7 +12,7 @@ html lang="en"
       header
         div class="logo"
           a href="/" 
-            img src="/img/logos/long_white_transparent_logo.png"
+            img src="/img//website_pictures/logos/long_white_transparent_logo.png"
         nav
             ul class="menu"
               li
@@ -59,14 +59,6 @@ html lang="en"
                         li
                           a href="/logout" Log out
       main
-        - if request.path_info == "/projects/new"
-          div class="side-menu-left"
-            div class="post-menu"
-              ul
-                li class="active"
-                  | PROJECT CREATION
-        - if request.path_info == "/posts/new"
-          
         == yield
       div class="footer"
       footer

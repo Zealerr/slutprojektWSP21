@@ -108,37 +108,62 @@ end
 
 # create post page
 get ('/posts/new') do
-  testUser()
   for_user
   slim(:"posts/new")
 end
 
 # upload post
 post ('/posts/new') do
-  userId = get_userId
-  projectId = params[:projectId]
-  # check if project exists and is owned by current user
-  if !check_project(userId, projectId)
-    p "project is not yours, please select from the menu and not through console"
-    redirect('/posts/new')
+  i = 0
+  
+  while i < 5 do
+    p "img[#{i}]"
+    imgFile = params[:"img"][i]
+    p imgFile
+    if imgFile != nil
+      #Skapa en sträng med join "./public/uploaded_pictures/cat.png"
+      path = File.join("./public/uploaded_img/",imgFile[:filename])
+      #Skriv innehållet i tempfile till path
+      File.write(path,File.read(imgFile[:tempfile]))
+    end
+    i += 1
   end
-  postTitle = params[:title]
-  # check if post with that title already exist in the specific project
-  if check_post(postTitle, projectId)
-    p "A post with that name already exists"
-    redirect('/posts/new')
-  end
-  postDesc = params[:desc]
-  postContent = params[:content]
-  postDate = params[:date]
-  postIsPublic = params[:isPublic]
-  postTags = params[:tags]
+
+
+
+  # userId = get_userId
+  # projectId = params[:projectId]
+  # # check if project exists and is owned by current user
+  # if !check_project(userId, projectId)
+  #   p "project is not yours, please select from the menu and not through console"
+  #   redirect('/posts/new')
+  # end
+  # postTitle = params[:title]
+  # # check if post with that title already exist in the specific project
+  # if check_post(postTitle, projectId)
+  #   p "A post with that name already exists"
+  #   redirect('/posts/new')
+  # end
+  # postDesc = params[:desc]
+  # postContent = params[:content]
+  # postDate = params[:date]
+  # postIsPublic = params[:isPublic]
+  # postTags = params[:tags]
   
 
-  post = Post.new(projectId, postTitle, postDesc, postContent, postDate, postIsPublic, postTags)
-  new_post(userId, post)
+  # post = Post.new(projectId, postTitle, postDesc, postContent, postDate, postIsPublic, postTags)
+  # new_post(userId, post)
   redirect('/')
 end
+
+post ('/posts/test') do
+  #Skapa en sträng med join "./public/uploaded_pictures/cat.png"
+  path = File.join("./public/uploaded_img/",params[:img][:filename])
+  #Skriv innehållet i tempfile till path
+  File.write(path,File.read(params[:img][:tempfile]))
+  redirect('/posts/new')
+end
+
 
 # create project page
 get ('/projects/new') do

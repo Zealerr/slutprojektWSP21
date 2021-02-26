@@ -12,10 +12,13 @@ div class="side-menu-left"
       li
         button type='button' onclick="Post.addField('quote')" + Quote
       li
-        button type='button' onclick="Post.addField('img')" + Image
+        button type='button' onclick="Post.addField('img')" id="imgButton" + Image
 
 .creation
   .center
+    form action="/posts/test" method="post" enctype="multipart/form-data"
+      input name="img" type="file" accept="image"
+      input type="submit"
     form id="creation-form" class="creation-form" action="/posts/new" method="post" enctype="multipart/form-data"
       input class="hidden" id="contentInput" name="content" type="text" placeholder="ContentInput"
       input class="hidden" id="tagsInput" name="tags" type="text" placeholder="tagsInput"
